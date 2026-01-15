@@ -1,0 +1,155 @@
+{
+  "name": "g-note",
+  "displayName": "G-Note: Global Folder Manager",
+  "description": "Manage global folders in sidebar, independent of workspace",
+  "version": "0.1.0",
+  "publisher": "your-publisher-name",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onView:globoNote.globalFolders"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "globoNote",
+          "title": "G-Note",
+          "icon": "$(folder-library)"
+        }
+      ]
+    },
+    "views": {
+      "globoNote": [
+        {
+          "id": "globoNote.globalFolders",
+          "name": "Global Folders"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "globoNote.addFolder",
+        "title": "Add Folder to G-Note",
+        "icon": "$(add)"
+      },
+      {
+        "command": "globoNote.removeFolder",
+        "title": "Remove Folder from List",
+        "icon": "$(remove)"
+      },
+      {
+        "command": "globoNote.newFile",
+        "title": "New File...",
+        "icon": "$(new-file)"
+      },
+      {
+        "command": "globoNote.newFolder",
+        "title": "New Folder...",
+        "icon": "$(new-folder)"
+      },
+      {
+        "command": "globoNote.rename",
+        "title": "Rename...",
+        "icon": "$(edit)"
+      },
+      {
+        "command": "globoNote.delete",
+        "title": "Delete...",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "globoNote.openFile",
+        "title": "Open",
+        "icon": "$(go-to-file)"
+      },
+      {
+        "command": "globoNote.openInOS",
+        "title": "Reveal in File Explorer",
+        "icon": "$(folder-opened)"
+      },
+      {
+        "command": "globoNote.refresh",
+        "title": "Refresh",
+        "icon": "$(refresh)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "globoNote.addFolder",
+          "when": "view == globoNote.globalFolders",
+          "group": "navigation"
+        },
+        {
+          "command": "globoNote.refresh",
+          "when": "view == globoNote.globalFolders",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "globoNote.newFile",
+          "when": "view == globoNote.globalFolders && viewItem =~ /^(root|directory)$/",
+          "group": "1_create@1"
+        },
+        {
+          "command": "globoNote.newFolder",
+          "when": "view == globoNote.globalFolders && viewItem =~ /^(root|directory)$/",
+          "group": "1_create@2"
+        },
+        {
+          "command": "globoNote.openFile",
+          "when": "view == globoNote.globalFolders && viewItem == file",
+          "group": "2_open@1"
+        },
+        {
+          "command": "globoNote.openInOS",
+          "when": "view == globoNote.globalFolders",
+          "group": "2_open@2"
+        },
+        {
+          "command": "globoNote.rename",
+          "when": "view == globoNote.globalFolders && viewItem =~ /^(directory|file)$/",
+          "group": "3_edit@1"
+        },
+        {
+          "command": "globoNote.delete",
+          "when": "view == globoNote.globalFolders && viewItem =~ /^(directory|file)$/",
+          "group": "3_edit@2"
+        },
+        {
+          "command": "globoNote.removeFolder",
+          "when": "view == globoNote.globalFolders && viewItem == root",
+          "group": "4_manage@1"
+        },
+        {
+          "command": "globoNote.refresh",
+          "when": "view == globoNote.globalFolders && viewItem =~ /^(root|directory)$/",
+          "group": "4_manage@2"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts",
+    "format": "prettier --write \"src/**/*.ts\""
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^6.13.0",
+    "@typescript-eslint/parser": "^6.13.0",
+    "eslint": "^8.54.0",
+    "prettier": "^3.1.0",
+    "typescript": "^5.3.0"
+  }
+}
